@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 import json
 
-app = Flask(__name__, static_folder='images', static_url_path='/images')
+app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Configuration
@@ -16,6 +16,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your-secret-key-change-this'
 
 db = SQLAlchemy(app)
+
+# Initialize database on app startup
+with app.app_context():
+    db.create_all()
 
 # Database Models
 class Admin(db.Model):
@@ -248,13 +252,4 @@ def health_check():
     """Health check endpoint"""
     return jsonify({'status': 'ok'}), 200
 
-
-if __name__ == '__main__':
-    try:
-        with app.app_context():
-            db.create_all()
-    except Exception as e:
-        print(f"FATAL ERROR during db.create_all(): {e}", flush=True)
-        import traceback
-        traceback.print_exc()
-        raise
+
