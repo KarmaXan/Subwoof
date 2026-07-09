@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2a2a72"/>
+      <stop offset="50%" stop-color="#b721ff"/>
+      <stop offset="100%" stop-color="#ff4d4d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <g fill="rgba(255,255,255,0.06)">
+    <circle cx="160" cy="200" r="140"/>
+    <circle cx="420" cy="120" r="100"/>
+    <circle cx="860" cy="260" r="160"/>
+    <circle cx="1040" cy="560" r="120"/>
+  </g>
+  <g transform="translate(120,320)" fill="#fff">
+    <rect x="0" y="0" width="120" height="220" rx="20" fill="#fff" opacity="0.06"/>
+  </g>
+  <text x="600" y="420" font-family="Arial, Helvetica, sans-serif" font-size="56" text-anchor="middle" fill="#fff" opacity="0.95">Drums and Paws</text>
+  <text x="600" y="480" font-family="Arial, Helvetica, sans-serif" font-size="22" text-anchor="middle" fill="#fff" opacity="0.85">Event photo placeholder — replace with drums-and-paws.jpg</text>
+</svg>

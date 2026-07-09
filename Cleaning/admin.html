@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Panel | SUB-Woof</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000000;
+      color: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #000000;
+      color: #f8fafc;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+      border-bottom: 1px solid #161616;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-info {
+      text-align: right;
+      font-size: 0.875rem;
+    }
+
+    .logout-btn {
+      padding: 8px 16px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .logout-btn:hover {
+      background: #dc2626;
+    }
+
+    .auth-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .auth-form {
+      width: 100%;
+      max-width: 400px;
+      background: #111111;
+      border: 1px solid #222222;
+      border-radius: 8px;
+      padding: 32px;
+    }
+
+    .auth-form h1 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 1.875rem;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      background: #1a1a1a;
+      border: 1px solid #333333;
+      border-radius: 6px;
+      color: #f8fafc;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: #222222;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px 16px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 24px;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    .auth-toggle {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.875rem;
+    }
+
+    .auth-toggle button {
+      background: none;
+      border: none;
+      color: #3b82f6;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background: #991b1b;
+      color: #fecaca;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 0.875rem;
+    }
+
+    .success-message {
+      background: #166534;
+      color: #bbf7d0;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 0.875rem;
+    }
+
+    .admin-container {
+      display: none;
+    }
+
+    .dashboard {
+      padding: 24px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #222222;
+    }
+
+    .form-card {
+      background: #111111;
+      border: 1px solid #222222;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .btn-secondary {
+      padding: 10px 16px;
+      background: #374151;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .event-card {
+      background: #111111;
+      border: 1px solid #222222;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .event-card:hover {
+      border-color: #3b82f6;
+    }
+
+    .event-image {
+      width: 100%;
+      height: 200px;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666666;
+      font-size: 0.875rem;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .event-content {
+      padding: 16px;
+    }
+
+    .event-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .event-details {
+      font-size: 0.875rem;
+      color: #9ca3af;
+      margin-bottom: 12px;
+    }
+
+    .event-details div {
+      margin-bottom: 6px;
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-delete {
+      flex: 1;
+      padding: 8px 12px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .btn-delete:hover {
+      background: #dc2626;
+    }
+
+    .btn-edit {
+      flex: 1;
+      padding: 8px 12px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .btn-edit:hover {
+      background: #2563eb;
+    }
+
+    .textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: #1a1a1a;
+      border: 1px solid #333333;
+      border-radius: 6px;
+      color: #f8fafc;
+      font-size: 0.875rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: #222222;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 24px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-right {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .user-info {
+        text-align: left;
+      }
+
+      .logout-btn {
+        width: 100%;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Auth Section -->
+    <div id="authSection" class="auth-container">
+      <div class="auth-form">
+        <h1>SUB-Woof Admin</h1>
+        
+        <div id="authMessage"></div>
+        
+        <div id="loginForm">
+          <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 24px;">Login</h2>
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="Enter username">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter password">
+          </div>
+          <button class="btn-primary" onclick="handleLogin()">Login</button>
+          <div class="auth-toggle">
+            Don't have an account? <button onclick="toggleAuthForm()">Sign up</button>
+          </div>
+        </div>
+
+        <div id="registerForm" style="display: none;">
+          <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 24px;">Create Admin Account</h2>
+          <div class="form-group">
+            <label for="registerUsername">Username</label>
+            <input type="text" id="registerUsername" placeholder="Choose username">
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input type="password" id="registerPassword" placeholder="Choose password">
+          </div>
+          <button class="btn-primary" onclick="handleRegister()">Create Account</button>
+          <div class="auth-toggle">
+            Already have an account? <button onclick="toggleAuthForm()">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard Section -->
+    <div id="adminSection" class="admin-container">
+      <div class="header">
+        <div class="brand">SUB-Woof Admin Panel</div>
+        <div class="header-right">
+          <div class="user-info">
+            <div>Logged in as: <strong id="adminUsername"></strong></div>
+          </div>
+          <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+      </div>
+
+      <div class="dashboard">
+        <!-- Create Event Section -->
+        <div class="section">
+          <h2 class="section-title">Create New Event</h2>
+          <div class="form-card">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="eventTitle">Event Title *</label>
+                <input type="text" id="eventTitle" placeholder="e.g., Summer Concert">
+              </div>
+              <div class="form-group">
+                <label for="eventDate">Date *</label>
+                <input type="date" id="eventDate">
+              </div>
+              <div class="form-group">
+                <label for="eventTime">Time</label>
+                <input type="time" id="eventTime">
+              </div>
+              <div class="form-group">
+                <label for="eventLocation">Location</label>
+                <input type="text" id="eventLocation" placeholder="e.g., Downtown Park">
+              </div>
+              <div class="form-group">
+                <label for="eventCapacity">Capacity</label>
+                <input type="number" id="eventCapacity" placeholder="e.g., 500" min="0">
+              </div>
+              <div class="form-group">
+                <label for="eventImageUrl">Image URL</label>
+                <input type="text" id="eventImageUrl" placeholder="https://example.com/image.jpg">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="eventDescription">Description</label>
+              <textarea id="eventDescription" class="textarea" placeholder="Event details..."></textarea>
+            </div>
+            <button class="btn-primary" onclick="handleCreateEvent()" style="margin-top: 16px; width: 100%;">Create Event</button>
+          </div>
+        </div>
+
+        <!-- Events List Section -->
+        <div class="section">
+          <h2 class="section-title">Manage Events</h2>
+          <div id="eventsLoadingState" class="loading">Loading events...</div>
+          <div id="eventsContainer" class="events-grid" style="display: none;"></div>
+          <div id="noEventsMessage" style="text-align: center; color: #9ca3af; padding: 24px; display: none;">
+            No events created yet. Create one above to get started.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:5000/api';
+    let authToken = localStorage.getItem('adminToken');
+    let adminUsername = localStorage.getItem('adminUsername');
+
+    // Check if already logged in
+    if (authToken && adminUsername) {
+      showAdminPanel();
+    }
+
+    function showAuthPanel() {
+      document.getElementById('authSection').style.display = 'flex';
+      document.getElementById('adminSection').style.display = 'none';
+    }
+
+    function showAdminPanel() {
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('adminSection').style.display = 'block';
+      document.getElementById('adminUsername').textContent = adminUsername;
+      loadEvents();
+    }
+
+    function toggleAuthForm() {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+      registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+      clearAuthMessage();
+    }
+
+    function showAuthMessage(message, isError = false) {
+      const messageDiv = document.getElementById('authMessage');
+      messageDiv.className = isError ? 'error-message' : 'success-message';
+      messageDiv.textContent = message;
+    }
+
+    function clearAuthMessage() {
+      document.getElementById('authMessage').innerHTML = '';
+    }
+
+    async function handleRegister() {
+      const username = document.getElementById('registerUsername').value.trim();
+      const password = document.getElementById('registerPassword').value.trim();
+
+      if (!username || !password) {
+        showAuthMessage('Username and password required', true);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/admin/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showAuthMessage(data.error || 'Registration failed', true);
+          return;
+        }
+
+        authToken = data.token;
+        adminUsername = data.username;
+        localStorage.setItem('adminToken', authToken);
+        localStorage.setItem('adminUsername', adminUsername);
+        showAdminPanel();
+      } catch (error) {
+        showAuthMessage('Error: ' + error.message, true);
+      }
+    }
+
+    async function handleLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!username || !password) {
+        showAuthMessage('Username and password required', true);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/admin/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showAuthMessage(data.error || 'Login failed', true);
+          return;
+        }
+
+        authToken = data.token;
+        adminUsername = data.username;
+        localStorage.setItem('adminToken', authToken);
+        localStorage.setItem('adminUsername', adminUsername);
+        showAdminPanel();
+      } catch (error) {
+        showAuthMessage('Error: ' + error.message, true);
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUsername');
+      authToken = null;
+      adminUsername = null;
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('registerUsername').value = '';
+      document.getElementById('registerPassword').value = '';
+      showAuthPanel();
+    }
+
+    async function handleCreateEvent() {
+      const title = document.getElementById('eventTitle').value.trim();
+      const date = document.getElementById('eventDate').value;
+      const time = document.getElementById('eventTime').value;
+      const location = document.getElementById('eventLocation').value.trim();
+      const capacity = parseInt(document.getElementById('eventCapacity').value) || 0;
+      const imageUrl = document.getElementById('eventImageUrl').value.trim();
+      const description = document.getElementById('eventDescription').value.trim();
+
+      if (!title || !date) {
+        alert('Title and date are required');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/admin/events`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            title,
+            date,
+            time,
+            location,
+            capacity,
+            image_url: imageUrl,
+            description
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.error || 'Failed to create event');
+          return;
+        }
+
+        // Clear form
+        document.getElementById('eventTitle').value = '';
+        document.getElementById('eventDate').value = '';
+        document.getElementById('eventTime').value = '';
+        document.getElementById('eventLocation').value = '';
+        document.getElementById('eventCapacity').value = '';
+        document.getElementById('eventImageUrl').value = '';
+        document.getElementById('eventDescription').value = '';
+
+        loadEvents();
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function loadEvents() {
+      try {
+        const response = await fetch(`${API_BASE}/events`);
+        const events = await response.json();
+
+        const container = document.getElementById('eventsContainer');
+        const loadingState = document.getElementById('eventsLoadingState');
+        const noEventsMsg = document.getElementById('noEventsMessage');
+
+        loadingState.style.display = 'none';
+
+        if (events.length === 0) {
+          container.style.display = 'none';
+          noEventsMsg.style.display = 'block';
+          return;
+        }
+
+        container.style.display = 'grid';
+        noEventsMsg.style.display = 'none';
+        container.innerHTML = events.map(event => `
+          <div class="event-card">
+            <div class="event-image">
+              ${event.image_url ? `<img src="${event.image_url}" alt="${event.title}">` : 'No Image'}
+            </div>
+            <div class="event-content">
+              <div class="event-title">${event.title}</div>
+              <div class="event-details">
+                <div>📅 ${event.date}</div>
+                ${event.time ? `<div>🕐 ${event.time}</div>` : ''}
+                ${event.location ? `<div>📍 ${event.location}</div>` : ''}
+                ${event.capacity > 0 ? `<div>👥 Capacity: ${event.capacity}</div>` : ''}
+              </div>
+              ${event.description ? `<div style="font-size: 0.875rem; color: #d1d5db; margin-bottom: 12px;">${event.description}</div>` : ''}
+              <div class="event-actions">
+                <button class="btn-edit" onclick="editEvent(${event.id})">Edit</button>
+                <button class="btn-delete" onclick="deleteEvent(${event.id})">Delete</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        alert('Error loading events: ' + error.message);
+      }
+    }
+
+    function editEvent(eventId) {
+      alert('Edit functionality coming soon. Event ID: ' + eventId);
+    }
+
+    async function deleteEvent(eventId) {
+      if (!confirm('Are you sure you want to delete this event?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/admin/events/${eventId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          alert(data.error || 'Failed to delete event');
+          return;
+        }
+
+        loadEvents();
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    // Load events periodically
+    setInterval(loadEvents, 10000);
+  </script>
+</body>
+</html>

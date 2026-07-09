@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reserve a Ticket | SUB-Woof</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000000;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: #000000;
+      border-bottom: 1px solid #333333;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #cccccc;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #111111;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #ffffff;
+    }
+
+    p {
+      color: #dddddd;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 14px;
+      border: 1px solid #444444;
+      border-radius: 6px;
+      box-sizing: border-box;
+      background: #000000;
+      color: #ffffff;
+    }
+
+    button {
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <img src="logo/subwooffinal2026.png" alt="SUB-Woof logo" width="180" height="72">
+    </div>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="#">Events</a>
+      <a href="#">FAQ</a>
+      <a href="#">Rules</a>
+      <a href="signup.html">Reserve Ticket</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Reserve a Ticket</h1>
+    <p>Fill out this short form to request tickets for the event.</p>
+    <form>
+      <label for="name">Full Name</label>
+      <input id="name" type="text" placeholder="Your name">
+
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com">
+
+      <label for="tickets">Number of Tickets</label>
+      <input id="tickets" type="number" min="1" placeholder="1">
+
+      <button type="submit">Request Tickets</button>
+    </form>
+  </main>
+</body>
+</html>

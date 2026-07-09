@@ -1,0 +1,12 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" rx="36" fill="#111827"/>
+  <circle cx="80" cy="82" r="38" fill="#1F2937" stroke="#60A5FA" stroke-width="6"/>
+  <path d="M54 84C54 66.3269 67.3269 53 85 53H92C109.673 53 123 66.3269 123 84V90C123 107.673 109.673 121 92 121H85C67.3269 121 54 107.673 54 90V84Z" fill="#F8FAFC"/>
+  <path d="M57 84C57 68.536 69.536 56 85 56V56C100.464 56 113 68.536 113 84V84C113 99.464 100.464 112 85 112V112C69.536 112 57 99.464 57 84V84Z" fill="#FBBF24"/>
+  <circle cx="72" cy="83" r="5" fill="#111827"/>
+  <circle cx="98" cy="83" r="5" fill="#111827"/>
+  <path d="M43 63C43 63 57.5 44 74 44" stroke="#60A5FA" stroke-width="6" stroke-linecap="round"/>
+  <path d="M117 63C117 63 102.5 44 86 44" stroke="#60A5FA" stroke-width="6" stroke-linecap="round"/>
+  <path d="M69 35L80 23L91 35" stroke="#60A5FA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="80" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#F8FAFC">subwooffinal2026</text>
+</svg>
