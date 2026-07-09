@@ -250,12 +250,5 @@ def health_check():
 
 
 if __name__ == '__main__':
-    try:
-        with app.app_context():
-            db.create_all()
-        app.run(debug=False, host='0.0.0.0', port=5000)
-    except Exception as e:
-        print(f"FATAL ERROR: {e}", flush=True)
-        import traceback
-        traceback.print_exc()
-        raise
+    with app.app_context():
+        db.create_all()
