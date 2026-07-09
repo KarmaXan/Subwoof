@@ -11,15 +11,23 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///events.db'
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'events.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your-secret-key-change-this'
 
 db = SQLAlchemy(app)
 
 # Initialize database on app startup
-with app.app_context():
-    db.create_all()
+try:
+    with app.app_context():
+        db.create_all()
+except Exception as e:
+    print(f"WARNING: Failed to initialize database: {e}", flush=True)
+    import traceback
+    traceback.print_exc()
+
 
 # Database Models
 class Admin(db.Model):
