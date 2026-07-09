@@ -250,5 +250,11 @@ def health_check():
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    try:
+        with app.app_context():
+            db.create_all()
+    except Exception as e:
+        print(f"FATAL ERROR during db.create_all(): {e}", flush=True)
+        import traceback
+        traceback.print_exc()
+        raise
